@@ -4,7 +4,7 @@ import _ from 'lodash';
 import $ from "jquery";
 
 export default function game_init(root) {
-    ReactDOM.render(<Memory side={0} />, root);
+    ReactDOM.render(<Memory />, root);
 }
 class Memory extends React.Component {
     constructor(props) {
@@ -42,13 +42,13 @@ class Memory extends React.Component {
             { id: 15, value: "H", matched: false, flipped: false }
         ];
 
-        for (let i = cards.length - 1; i > 0; i--) {
+        /*for (let i = cards.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             const temp = cards[i];
             cards[i] = cards[j];
             cards[j] = temp;
         }
-
+        */
         for (let i = 0; i < 16; i++) {
             cards[i].id = i;
         }
@@ -116,9 +116,9 @@ class Memory extends React.Component {
                 <div className="container">
                     <div className="row">
                         <div className="column">
-                            <Card id={this.state.cards[0].id} value={this.state.cards[0].value}
+                            <p><Card id={this.state.cards[0].id} value={this.state.cards[0].value}
                                 matched={this.state.cards[0].matched} flipped={this.state.cards[0].flipped}
-                                flip={this.flip.bind(this)} />
+                                flip={this.flip.bind(this)} /></p>
                         </div>
                         <div className="column">
                             <Card id={this.state.cards[1].id} value={this.state.cards[1].value}
@@ -138,9 +138,9 @@ class Memory extends React.Component {
                     </div>
                     <div className="row">
                         <div className="column">
-                            <Card id={this.state.cards[4].id} value={this.state.cards[4].value}
+                            <p><Card id={this.state.cards[4].id} value={this.state.cards[4].value}
                                 matched={this.state.cards[4].matched} flipped={this.state.cards[4].flipped}
-                                flip={this.flip.bind(this)} />
+                                flip={this.flip.bind(this)} /></p>
                         </div>
                         <div className="column">
                             <Card id={this.state.cards[5].id} value={this.state.cards[5].value}
@@ -160,9 +160,9 @@ class Memory extends React.Component {
                     </div>
                     <div className="row">
                         <div className="column">
-                            <Card id={this.state.cards[8].id} value={this.state.cards[8].value}
+                            <p><Card id={this.state.cards[8].id} value={this.state.cards[8].value}
                                 matched={this.state.cards[8].matched} flipped={this.state.cards[8].flipped}
-                                flip={this.flip.bind(this)} />
+                                flip={this.flip.bind(this)} /></p>
                         </div>
                         <div className="column">
                             <Card id={this.state.cards[9].id} value={this.state.cards[9].value}
@@ -182,9 +182,9 @@ class Memory extends React.Component {
                     </div>
                     <div className="row">
                         <div className="column">
-                            <Card id={this.state.cards[12].id} value={this.state.cards[12].value}
+                            <p><Card id={this.state.cards[12].id} value={this.state.cards[12].value}
                                 matched={this.state.cards[12].matched} flipped={this.state.cards[12].flipped}
-                                flip={this.flip.bind(this)} />
+                                flip={this.flip.bind(this)} /></p>
                         </div>
                         <div className="column">
                             <Card id={this.state.cards[13].id} value={this.state.cards[13].value}
@@ -211,15 +211,15 @@ class Memory extends React.Component {
 function Card(props) {
     if (props.matched) {
         return (
-            <div className="matched card">{props.value}q</div>
+            <div className="matched card">{props.value}</div>
         )
     } else if (props.flipped) {
         return (
-            <div className="card">{props.value}r</div>
+            <div className="card">{props.value}</div>
         )
     } else {
         return (
-            <div className="card" onClick={() => props.flip(props.id)}>s</div>
+            <div className="card" onClick={() => props.flip(props.id)}></div>
         )
     }
 }

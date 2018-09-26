@@ -15,10 +15,11 @@ body { font-size: 20pt; }
 	text-align: center; 
 }
 .card { 
-	height: 50px;
+	border: 1px solid black;
+	height: 100px;
 	width: 100%;
 	text-align: center;
-	background-color: white
+	background-color: lightblue
 }
  
 .matched {
