@@ -106,6 +106,32 @@ class Memory extends React.Component {
         if (this.state.matches == 8) {
             buttontxt = "Play Again";
         }
+
+        let cardDivs = []
+        for (let i = 0; i < 4; i++) {
+            const x = i * 4;
+            cardDivs.push(
+                <div className="row">
+                    <div className="column">
+                        <p><Card {...this.state.cards[x + 0]}
+                            flip={this.flip.bind(this)} /></p>
+                    </div>
+                    <div className="column">
+                        <Card {...this.state.cards[x + 1]}
+                            flip={this.flip.bind(this)} />
+                    </div>
+                    <div className="column">
+                        <Card {...this.state.cards[x + 2]}
+                            flip={this.flip.bind(this)} />
+                    </div>
+                    <div className="column">
+                        <Card {...this.state.cards[x + 3]}
+                            flip={this.flip.bind(this)} />
+                    </div>
+                </div>
+            );
+        }
+
         return (
             <div>
                 <div>
@@ -114,94 +140,7 @@ class Memory extends React.Component {
                     <p>Matches: {this.state.matches}</p>
                 </div>
                 <div className="container">
-                    <div className="row">
-                        <div className="column">
-                            <p><Card id={this.state.cards[0].id} value={this.state.cards[0].value}
-                                matched={this.state.cards[0].matched} flipped={this.state.cards[0].flipped}
-                                flip={this.flip.bind(this)} /></p>
-                        </div>
-                        <div className="column">
-                            <Card id={this.state.cards[1].id} value={this.state.cards[1].value}
-                                matched={this.state.cards[1].matched} flipped={this.state.cards[1].flipped}
-                                flip={this.flip.bind(this)} />
-                        </div>
-                        <div className="column">
-                            <Card id={this.state.cards[2].id} value={this.state.cards[2].value}
-                                matched={this.state.cards[2].matched} flipped={this.state.cards[2].flipped}
-                                flip={this.flip.bind(this)} />
-                        </div>
-                        <div className="column">
-                            <Card id={this.state.cards[3].id} value={this.state.cards[3].value}
-                                matched={this.state.cards[3].matched} flipped={this.state.cards[3].flipped}
-                                flip={this.flip.bind(this)} />
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="column">
-                            <p><Card id={this.state.cards[4].id} value={this.state.cards[4].value}
-                                matched={this.state.cards[4].matched} flipped={this.state.cards[4].flipped}
-                                flip={this.flip.bind(this)} /></p>
-                        </div>
-                        <div className="column">
-                            <Card id={this.state.cards[5].id} value={this.state.cards[5].value}
-                                matched={this.state.cards[5].matched} flipped={this.state.cards[5].flipped}
-                                flip={this.flip.bind(this)} />
-                        </div>
-                        <div className="column">
-                            <Card id={this.state.cards[6].id} value={this.state.cards[6].value}
-                                matched={this.state.cards[6].matched} flipped={this.state.cards[6].flipped}
-                                flip={this.flip.bind(this)} />
-                        </div>
-                        <div className="column">
-                            <Card id={this.state.cards[7].id} value={this.state.cards[7].value}
-                                matched={this.state.cards[7].matched} flipped={this.state.cards[7].flipped}
-                                flip={this.flip.bind(this)} />
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="column">
-                            <p><Card id={this.state.cards[8].id} value={this.state.cards[8].value}
-                                matched={this.state.cards[8].matched} flipped={this.state.cards[8].flipped}
-                                flip={this.flip.bind(this)} /></p>
-                        </div>
-                        <div className="column">
-                            <Card id={this.state.cards[9].id} value={this.state.cards[9].value}
-                                matched={this.state.cards[9].matched} flipped={this.state.cards[9].flipped}
-                                flip={this.flip.bind(this)} />
-                        </div>
-                        <div className="column">
-                            <Card id={this.state.cards[10].id} value={this.state.cards[10].value}
-                                matched={this.state.cards[10].matched} flipped={this.state.cards[10].flipped}
-                                flip={this.flip.bind(this)} />
-                        </div>
-                        <div className="column">
-                            <Card id={this.state.cards[11].id} value={this.state.cards[11].value}
-                                matched={this.state.cards[11].matched} flipped={this.state.cards[11].flipped}
-                                flip={this.flip.bind(this)} />
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="column">
-                            <p><Card id={this.state.cards[12].id} value={this.state.cards[12].value}
-                                matched={this.state.cards[12].matched} flipped={this.state.cards[12].flipped}
-                                flip={this.flip.bind(this)} /></p>
-                        </div>
-                        <div className="column">
-                            <Card id={this.state.cards[13].id} value={this.state.cards[13].value}
-                                matched={this.state.cards[13].matched} flipped={this.state.cards[13].flipped}
-                                flip={this.flip.bind(this)} />
-                        </div>
-                        <div className="column">
-                            <Card id={this.state.cards[14].id} value={this.state.cards[14].value}
-                                matched={this.state.cards[14].matched} flipped={this.state.cards[14].flipped}
-                                flip={this.flip.bind(this)} />
-                        </div>
-                        <div className="column">
-                            <Card id={this.state.cards[15].id} value={this.state.cards[15].value}
-                                matched={this.state.cards[15].matched} flipped={this.state.cards[15].flipped}
-                                flip={this.flip.bind(this)} />
-                        </div>
-                    </div>
+                    {cardDivs}
                 </div>
             </div >
         );
