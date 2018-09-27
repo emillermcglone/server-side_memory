@@ -6,6 +6,8 @@ import $ from "jquery";
 export default function game_init(root) {
     ReactDOM.render(<Memory />, root);
 }
+
+/*Attribution https://github.com/emillermcglone/Spr18memory/blob/master/assets/js/game.jsx*/
 class Memory extends React.Component {
     constructor(props) {
         super(props);
@@ -19,7 +21,6 @@ class Memory extends React.Component {
             matches: 0,
             guesses: 0,
         };
-        console.log(this.state.cards)
     }
 
     initializeCards() {
@@ -111,7 +112,7 @@ class Memory extends React.Component {
         for (let i = 0; i < 4; i++) {
             const x = i * 4;
             cardDivs.push(
-                <div className="row">
+                <div key={i} className="row">
                     <div className="column">
                         <p><Card {...this.state.cards[x + 0]}
                             flip={this.flip.bind(this)} /></p>
@@ -135,11 +136,14 @@ class Memory extends React.Component {
         return (
             <div>
                 <div>
-                    <p><button onClick={this.reset}>{buttontxt}</button></p>
-                    <p>Guesses: {this.state.guesses}</p>
-                    <p>Matches: {this.state.matches}</p>
+                    <h1>Memory Game</h1>
                 </div>
                 <div className="container">
+                    <div className="row">
+                        <div className="column"><button onClick={this.reset}>{buttontxt}</button></div>
+                        <div className="column">Guesses: {this.state.guesses}</div>
+                        <div className="column"><p>Matches: {this.state.matches}</p></div>
+                    </div>
                     {cardDivs}
                 </div>
             </div >
