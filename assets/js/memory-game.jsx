@@ -42,13 +42,13 @@ class Memory extends React.Component {
             { id: 15, value: "H", matched: false, flipped: false }
         ];
 
-        /*for (let i = cards.length - 1; i > 0; i--) {
+        for (let i = cards.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             const temp = cards[i];
             cards[i] = cards[j];
             cards[j] = temp;
         }
-        */
+
         for (let i = 0; i < 16; i++) {
             cards[i].id = i;
         }
@@ -215,7 +215,7 @@ function Card(props) {
         )
     } else if (props.flipped) {
         return (
-            <div className="card">{props.value}</div>
+            <div className="flipped card">{props.value}</div>
         )
     } else {
         return (

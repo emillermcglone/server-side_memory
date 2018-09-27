@@ -17,7 +17,7 @@ body { font-size: 20pt; }
 .card { 
 	border: 1px solid black;
 	height: 100px;
-	width: 100%;
+	width: 200px;
 	text-align: center;
 	background-color: lightblue
 }
@@ -25,3 +25,7 @@ body { font-size: 20pt; }
 .matched {
 	background-color: lightgreen
 } 
+
+.flipped {
+	background-color: pink
+}
