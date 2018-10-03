@@ -54,41 +54,33 @@ defmodule Memory.Game do
       secondCard = game.secondCard
       matches = game.matches
       guesses = game.guesses
-      
       # if it's the first card to be clicked, set firstCard to id, and the card to flipped
       if firstCard = -1 do 
         firstCard = id 
-        newCards = 
-          cards
-          |> Enum.map(fn x -> 
-            if x.index == id do 
-              Map.put(x, :flipped, true)
-            else x 
-          end
-        end)
-      
+        # update & return the game state 
+        %{
+          cards: markFlipped(cards, firstCard),
+          disableClick: disableClick,
+          firstCard: firstCard,
+          secondCard: secondCard,
+          matches: game.matches,
+          guesses: game.guesses 
+        }
+
       # When the second card has been clicked, set disableClick to true, secondCard to id, and the card to flipped
       else
         disableClick = true 
         secondCard = id
-        newCards = 
-           cards
-            |> Enum.map(fn x -> if x.index == id do 
-            Map.put(x, :flipped, true)
-            else x 
-            end
-      end)
-    end
-
-    # update the game state  
-    %{
-      cards: newCards,
-      disableClick: disableClick,
-      firstCard: firstCard,
-      secondCard: secondCard,
-      matches: game.matches,
-      guesses: game.guesses 
-    }
+        # update & return the game state  
+        %{
+          cards: markFlipped(cards, secondCard),
+          disableClick: disableClick,
+          firstCard: firstCard,
+          secondCard: secondCard,
+          matches: game.matches,
+          guesses: game.guesses 
+        }
+      end
     end 
   end
 
@@ -108,35 +100,65 @@ defmodule Memory.Game do
     # If the cards match, set matched to true, and add 1 to matches
     if firstCardElems.value == secondCardElems.value do 
       matches = matches + 1
-      newCards = 
-        cards
-        |> Enum.map(fn x -> 
-          if x.index == firstCard || x.index == secondCard do 
-            Map.put(x, :matched, true)
-          else x 
-          end
-        end)
-    
+      # update & return the game state 
+      %{
+        cards: markMatched(cards, firstCard, secondCard),
+        disableClick: disableClick,
+        firstCard: -1,
+        secondCard: -1,
+        matches: matches,
+        guesses: guesses 
+      }
+      
     # the cards do not match, set flip to false
     else
-      newCards = 
-        cards
-        |> Enum.map(fn x -> 
-          if x.index == firstCard || x.index == secondCard do 
-            Map.put(x, :flipped, true)
-          else x 
-          end
-        end)
+      # update & return the game state 
+      %{
+        cards: markUnflipped(cards, firstCard, secondCard),
+        disableClick: disableClick,
+        firstCard: -1,
+        secondCard: -1,
+        matches: matches,
+        guesses: guesses 
+      }
     end
+  end
 
-  # update the game state  
-  %{
-    cards: newCards,
-    disableClick: disableClick,
-    firstCard: -1,
-    secondCard: -1,
-    matches: matches,
-    guesses: guesses 
-  }
+  # In cards, mark both clicked cards as matched
+  def markMatched(cards, firstCard, secondCard) do
+    cards 
+    |> Enum.map(fn x -> 
+      if x.index == firstCard || x.index == secondCard do 
+        Map.put(x, :matched, true)
+      else 
+        x 
+      end
+    end)
+  end
+
+  # In cards, mark one clicked card as flipped
+  def markFlipped(cards, clickedCard) do 
+    cards
+    |> Enum.map(fn x -> 
+      if x.index == clickedCard do 
+        Map.put(x, :flipped, true)
+      else 
+        x 
+      end
+    end) 
+  end
+
+  # In cards, mark both clicked cards as not flipped
+  def markUnflipped(cards, firstCard, secondCard) do 
+    cards
+    |> Enum.map(fn x -> 
+      if x.index == firstCard || x.index == secondCard do 
+        Map.put(x, :flipped, true)
+      else 
+        x 
+      end
+    end) 
   end
 end
+
+
