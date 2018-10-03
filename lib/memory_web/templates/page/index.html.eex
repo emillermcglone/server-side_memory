@@ -1,3 +1,20 @@
-<div id="root">
-  React app loading...
+<script>
+  function JoinGame() {
+    var gameName = document.getElementById("gameName").value;
+    if (gameName == "") {
+      return
+    }
+    //https://stackoverflow.com/questions/4689344/how-can-i-add-href-attribute-to-a-link-dynamically-using-javascript
+    var a = document.getElementById("joinID");
+    a.href = "/game/" + gameName;
+  }
+</script>
+
+<div class="row">
+  <div class="col">
+    <h1 id="index-page">Memory Game</h1>
+    <h4 id="index-page">Enter a Username:</h4>
+    <p><input type="text" id="gameName"/><p>
+    <p><a href="#" id="joinID" onClick="JoinGame()">Join</a></p>
+  </div>
 </div>

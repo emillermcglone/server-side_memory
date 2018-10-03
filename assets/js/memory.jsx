@@ -135,9 +135,6 @@ class Memory extends React.Component {
 
         return (
             <div>
-                <div>
-                    <h1>Memory Game</h1>
-                </div>
                 <div className="container">
                     <div className="row">
                         <div className="column"><button onClick={this.reset}>{buttontxt}</button></div>
@@ -166,5 +163,3 @@ function Card(props) {
         )
     }
 }
-
-
