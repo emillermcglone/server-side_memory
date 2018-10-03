@@ -1,27 +1,142 @@
 defmodule Memory.Game do
-    def new do
+  
+  # Start a new game
+  def new do
+    %{
+      cards: initialCards(),
+      disableClick: false,
+      firstCard: -1,
+      secondCard: -1,
+      matches: 0,
+      guesses: 0
+    }
+  end
+
+  # Used to update the client's view of the game state 
+  def client_view(game) do
+    %{
+      cards: game.cards,
+      disableClick: false,
+      firstCard: -1,
+      secondCard: -1,
+      matches: game.matches,
+      guesses: game.guesses
+    }
+  end
+    
+  # Create the initial cards for the board 
+  def initialCards() do
+    letters = "AABBCCDDEEFFGGHH"
+    letters = String.split(letters, "", trim: true)
+
+    letters
+    |> Enum.shuffle()
+    |> Enum.with_index()
+    |> Enum.map(fn x -> 
       %{
-        cards: initialCards("AABBCCDDEEFFGGHH"),
-        disableClick: false,
-        lastCard: -1,
-        matches: 0,
-        guesses: 0
-      }
+          index: elem(x, 1),
+          value: elem(x, 0), 
+          matched: false, 
+          flipped: false
+        }
+    end)
+  end
+
+  # Manage a click
+  def click(game, id) do
+    # When 2 cards have been selected, don't allow player to click
+    if game.disableClick == true do 
+      game
+    else
+      cards = game.cards
+      disableClick = game.disableClick
+      firstCard = game.firstCard
+      secondCard = game.secondCard
+      matches = game.matches
+      guesses = game.guesses
+      
+      # if it's the first card to be clicked, set firstCard to id, and the card to flipped
+      if firstCard = -1 do 
+        firstCard = id 
+        newCards = 
+          cards
+          |> Enum.map(fn x -> 
+            if x.index == id do 
+              Map.put(x, :flipped, true)
+            else x 
+          end
+        end)
+      
+      # When the second card has been clicked, set disableClick to true, secondCard to id, and the card to flipped
+      else
+        disableClick = true 
+        secondCard = id
+        newCards = 
+           cards
+            |> Enum.map(fn x -> if x.index == id do 
+            Map.put(x, :flipped, true)
+            else x 
+            end
+      end)
     end
-     def client_view(game) do
-      %{
-        cards: game.cards,
-        disableClick: game.disableClick,
-        lastCard: game.lastCard,
-        matches: game.matches,
-        guesses: game.guesses
-      }
+
+    # update the game state  
+    %{
+      cards: newCards,
+      disableClick: disableClick,
+      firstCard: firstCard,
+      secondCard: secondCard,
+      matches: game.matches,
+      guesses: game.guesses 
+    }
+    end 
+  end
+
+  # Check if firstCard and secondCard are a match
+  def checkMatch(game) do
+    cards = game.cards
+    disableClick = game.disableClick
+    firstCard = game.firstCard
+    secondCard = game.secondCard
+    matches = game.matches
+    guesses = game.guesses
+
+    guesses = guesses + 1
+    firstCardElems = elem(Enum.fetch(cards, firstCard), 1)
+    secondCardElems = elem(Enum.fetch(cards, secondCard), 1)
+
+    # If the cards match, set matched to true, and add 1 to matches
+    if firstCardElems.value == secondCardElems.value do 
+      matches = matches + 1
+      newCards = 
+        cards
+        |> Enum.map(fn x -> 
+          if x.index == firstCard || x.index == secondCard do 
+            Map.put(x, :matched, true)
+          else x 
+          end
+        end)
+    
+    # the cards do not match, set flip to false
+    else
+      newCards = 
+        cards
+        |> Enum.map(fn x -> 
+          if x.index == firstCard || x.index == secondCard do 
+            Map.put(x, :flipped, true)
+          else x 
+          end
+        end)
     end
-     def initialCards(letters) do
-      letters
-      |> String.split("")
-      |> Enum.map(fn x -> %{value: x, matched: false, flipped: false} end)
-      |> Enum.shuffle()
-      |> Enum.filter(&(&1.value != ""))
-    end
+
+  # update the game state  
+  %{
+    cards: newCards,
+    disableClick: disableClick,
+    firstCard: -1,
+    secondCard: -1,
+    matches: matches,
+    guesses: guesses 
+  }
+  end
 end
