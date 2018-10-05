@@ -1,5 +1,5 @@
 ## Name of the node
--name <%= memory_01 %>1@127.0.0.1
+-name server-memory@127.0.0.1
 
 ## Cookie for distributed erlang
 -setcookie <%= release.profile.cookie %>
