@@ -13,7 +13,7 @@
 <div class="row">
   <div class="col">
     <h1 id="index-page">Memory Game</h1>
-    <h4 id="index-page">Enter a Username:</h4>
+    <h4 id="index-page">Enter A Game Name:</h4>
     <p><input type="text" id="gameName"/><p>
     <p><a href="#" id="joinID" onClick="JoinGame()">Join</a></p>
   </div>

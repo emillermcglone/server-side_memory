@@ -22,8 +22,7 @@ import socket from "./socket";
 import game_init from "./memory";
 
 function start() {
-
-  let root = document.getElementById('root');
+  let root = document.getElementById('game');
 
   if (root) {
     let channel = socket.channel("games:" + window.gameName, {});

@@ -3,35 +3,49 @@ import ReactDOM from 'react-dom';
 import _ from 'lodash';
 import $ from "jquery";
 
+
 export default function game_init(root, channel) {
     ReactDOM.render(<Game channel={channel} />, root);
 }
 
-/*Attribution https://github.com/emillermcglone/Spr18memory/blob/master/assets/js/game.jsx*/
-class Memory extends React.Component {
+class Game extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            cards: {},
+            disableClick: false,
+            firstCard: -1,
+            secondCard: -1,
+            matches: 0,
+            guesses: 0
+        };
         this.channel = props.channel;
         this.channel.join()
             .receive("ok", this.gotView.bind(this))
             .receive("error", resp => { console.log("Unable to join", resp) })
+
+        this.sendClick = this.sendClick.bind(this)
+        this.sendReset = this.sendReset.bind(this)
     }
 
     gotView(view) {
         this.setState(view.game);
         if (view.game.disableClick) {
             setTimeout(() => {
-                this.channel.push("match").receive("ok", this.gotView.bind(this));
+                this.channel.push("match")
+                    .receive("ok", this.gotView.bind(this));
             }, 1500);
         }
     }
 
     sendClick(id) {
-        this.channel.push("click", { index: id }).receive("ok", this.gotView.bind(this));
+        this.channel.push("click", { index: id })
+            .receive("ok", this.gotView.bind(this));
     }
 
     sendReset() {
-        this.channel.push("reset").receive("ok", this.gotView.bind(this));
+        this.channel.push("reset")
+            .receive("ok", this.gotView.bind(this));
     }
 
     render() {
@@ -39,7 +53,6 @@ class Memory extends React.Component {
         if (this.state.matches == 8) {
             buttontxt = "Play Again";
         }
-
         let cardDivs = []
         for (let i = 0; i < 4; i++) {
             const x = i * 4;

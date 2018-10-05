@@ -16,9 +16,9 @@ defmodule Memory.Game do
   def client_view(game) do
     %{
       cards: game.cards,
-      disableClick: false,
-      firstCard: -1,
-      secondCard: -1,
+      disableClick: game.disableClick,
+      firstCard: game.firstCard,
+      secondCard: game.secondCard,
       matches: game.matches,
       guesses: game.guesses
     }
